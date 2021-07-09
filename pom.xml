@@ -22,7 +22,7 @@
     </properties>
 
     <modules>
-        <module>euraka</module>
+        <module>eureka</module>
     </modules>
 
     <dependencyManagement>
