@@ -1,0 +1,20 @@
+server:
+  port: 10100
+spring:
+  application:
+    name: euraka
+eureka:
+  instance:
+    # 应用实例主机名
+    hostname: dev.ddp.com
+    # true:客户端在注册时使用主机名 缺省false:使用IP
+    preferIpAddress: true
+  client:
+    # 是否向注册中心注册自己
+    register-with-eureka: false
+    # 是否从Eureka获取注册信息
+    fetch-registry: false
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+  server:
+    renewal-percent-threshold: 0.49
