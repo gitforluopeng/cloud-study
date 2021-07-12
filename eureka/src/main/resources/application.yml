@@ -1,13 +1,14 @@
 server:
+  #默认8761
   port: 10100
 spring:
   application:
-    name: euraka
+    name: eureka
 eureka:
   instance:
     # 应用实例主机名
-    hostname: dev.ddp.com
-    # true:客户端在注册时使用主机名 缺省false:使用IP
+    hostname: dev.club.lp.com
+    # true: 以IP地址注册到服务中心，相互注册使用IP地址
     preferIpAddress: true
   client:
     # 是否向注册中心注册自己
@@ -15,6 +16,7 @@ eureka:
     # 是否从Eureka获取注册信息
     fetch-registry: false
     serviceUrl:
+      #单节点暴露给注册者的注册地址， 多节点为另外eureka的地址
       defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
   server:
     renewal-percent-threshold: 0.49
