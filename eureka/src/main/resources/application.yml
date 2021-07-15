@@ -9,9 +9,10 @@ eureka:
     # 应用实例主机名
     hostname: dev.club.lp.com
     # true: 以IP地址注册到服务中心，相互注册使用IP地址
-    preferIpAddress: true
+    #preferIpAddress: true
+    #instance-id: ${spring.cloud.client.ip-address}:${server.port}
   client:
-    # 是否向注册中心注册自己
+    # 是否向注册中心注册自己 单节点自己不注册
     register-with-eureka: false
     # 是否从Eureka获取注册信息
     fetch-registry: false
