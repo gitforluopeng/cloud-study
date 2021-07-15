@@ -1,0 +1,14 @@
+server:
+  port: 10101
+spring:
+  application:
+    name: server
+eureka:
+  instance:
+    # true: 以IP地址注册到服务中心，相互注册使用IP地址
+    preferIpAddress: true
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+  client:
+    serviceUrl:
+      #单节点暴露给注册者的注册地址， 多节点为另外eureka的地址
+      defaultZone: http://localhost:10100/eureka/

@@ -23,8 +23,17 @@
 
     <modules>
         <module>eureka</module>
+        <module>server</module>
+        <module>client</module>
     </modules>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+
+    </dependencies>
     <dependencyManagement>
         <dependencies>
             <dependency>

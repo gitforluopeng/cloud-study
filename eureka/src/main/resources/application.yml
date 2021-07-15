@@ -7,7 +7,7 @@ spring:
 eureka:
   instance:
     # 应用实例主机名
-    hostname: dev.club.lp.com
+    hostname: localhost
     # true: 以IP地址注册到服务中心，相互注册使用IP地址
     #preferIpAddress: true
     #instance-id: ${spring.cloud.client.ip-address}:${server.port}
