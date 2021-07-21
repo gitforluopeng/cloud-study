@@ -1,5 +1,8 @@
 server:
   port: 10102
+  #tomcat:
+    #threads:
+      #max: 10
 spring:
   application:
     name: client
@@ -10,4 +13,9 @@ eureka:
     # 是否从Eureka获取注册信息
     serviceUrl:
       #单节点暴露给注册者的注册地址， 多节点为另外eureka的地址
-      defaultZone: http://localhost:10100/eureka/
+      defaultZone: http://root:root@localhost:10100/eureka/
+ribbon:
+  ReadTimeout: 60000 #请求处理的超时时间
+  ConnectTimeout: 60000 #请求连接的超时时间
+  MaxAutoRetries: 0
+  MaxAutoRetriesNextServer: 1

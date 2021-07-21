@@ -13,33 +13,50 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
 @Service
 public class OrderServiceImpl implements OrderService {
 
-    @Autowired
+    //@Autowired
     private RestTemplate restTemplate;
 
-    @Autowired
+    //@Autowired
     private DiscoveryClient discoveryClient;
 
-    @Autowired
+    //@Autowired
     private LoadBalancerClient loadBalancerClient;
+
+    //@Autowired
+    private ProductFeignClient productFeignClient;
+
+    @Autowired
+    private ProductService productService;
 
     @Override
     public Order list(Long id) {
         Order order = new Order();
         order.setId(id);
         order.setCode(UUID.randomUUID().toString());
-        order.setProducts(getProds3());
+        order.setProducts(productService.list());
+        return order;
+    }
+
+    @Override
+    public Order selectById(Long id) {
+        Order order = new Order();
+        order.setId(id);
+        order.setCode(UUID.randomUUID().toString());
+        order.setProducts(Collections.singletonList(productService.selectById(id)));
         return order;
     }
 
     /**
-     * @see org.springframework.cloud.client.discovery.DiscoveryClient DiscoveryClient方式 通过元数据获取服务信息
      * @return
+     * @see org.springframework.cloud.client.discovery.DiscoveryClient DiscoveryClient方式 通过元数据获取服务信息
      */
     private List<Product> getProds1() {
         StringBuilder sb = new StringBuilder("http://");
@@ -60,12 +77,14 @@ public class OrderServiceImpl implements OrderService {
         sb.append("/product");
 
         //http请求服务
-        ResponseEntity<List<Product>> response = restTemplate.exchange(sb.toString(), HttpMethod.GET, null, new ParameterizedTypeReference<List<Product>>() {});
+        ResponseEntity<List<Product>> response = restTemplate.exchange(sb.toString(), HttpMethod.GET, null, new ParameterizedTypeReference<List<Product>>() {
+        });
         return response.getBody();
-     }
+    }
 
     /**
      * LoadBalancerClient方式 Ribbon的负载均衡器
+     *
      * @return
      */
     private List<Product> getProds2() {
@@ -80,20 +99,29 @@ public class OrderServiceImpl implements OrderService {
         //
         sb.append("/product");
 
+        System.out.println(sb);
+
         //http请求服务
-        ResponseEntity<List<Product>> response = restTemplate.exchange(sb.toString(), HttpMethod.GET, null, new ParameterizedTypeReference<List<Product>>() {});
+        ResponseEntity<List<Product>> response = restTemplate.exchange(sb.toString(), HttpMethod.GET, null, new ParameterizedTypeReference<List<Product>>() {
+        });
         return response.getBody();
     }
 
     /**
+     * @return
      * @see org.springframework.cloud.client.loadbalancer.LoadBalanced 方式 通过注解开启Ribbon的负载均衡器
      * RestTemplate 加注解 restTemplate具有负载均衡的能力
-     * @return
      */
     private List<Product> getProds3() {
         //http请求服务
         //直接请求服务ID
-        ResponseEntity<List<Product>> response = restTemplate.exchange("http://server/product", HttpMethod.GET, null, new ParameterizedTypeReference<List<Product>>() {});
+        ResponseEntity<List<Product>> response = restTemplate.exchange("http://server/product", HttpMethod.GET, null, new ParameterizedTypeReference<List<Product>>() {
+        });
         return response.getBody();
     }
+
+    private List<Product> getProds4() {
+        return productFeignClient.getProducts();
+    }
+
 }

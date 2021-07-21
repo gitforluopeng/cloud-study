@@ -11,4 +11,13 @@ eureka:
   client:
     serviceUrl:
       #单节点暴露给注册者的注册地址， 多节点为另外eureka的地址
-      defaultZone: http://localhost:10100/eureka/
+      defaultZone: http://root:root@localhost:10100/eureka/
+#向注册中心注册的服务开启shutdown端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: shutdown
+  endpoint:
+    shutdown:
+      enabled: true

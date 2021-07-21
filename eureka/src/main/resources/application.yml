@@ -4,6 +4,10 @@ server:
 spring:
   application:
     name: eureka
+  security:
+    user:
+      name: root
+      password: root
 eureka:
   instance:
     # 应用实例主机名
@@ -21,3 +25,7 @@ eureka:
       defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
   server:
     renewal-percent-threshold: 0.49
+    #关闭自我保护
+    #enable-self-preservation: false
+    #清理间隔 单位毫秒
+    #eviction-interval-timer-in-ms: 60000

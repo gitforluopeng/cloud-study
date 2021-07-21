@@ -15,9 +15,14 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
-    @GetMapping("/order/{id}")
-    public Order buId(@PathVariable Long id) {
+    @GetMapping("/{id}")
+    public Order byId(@PathVariable Long id) {
         return orderService.list(id);
+    }
+
+    @GetMapping("/temp/{id}")
+    public Order byId2(@PathVariable Long id) {
+        return orderService.selectById(id);
     }
 
 }
